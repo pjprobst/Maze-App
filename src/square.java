@@ -2,10 +2,11 @@ class square{
     private int row;
     private int col;
     private int type;
+
     public square(int ro, int co, int typ) {
-    this.row = ro;
-    this.col = co;
-    this.type = typ;
+        this.row = ro;
+        this.col = co;
+        this.type = typ;
     }
 
     public int getRow(){
