@@ -38,27 +38,43 @@ public class maze
     }
     public ArrayList<square> getNeighbors(square sq){
         ArrayList<square> neighbors = new ArrayList<square>();
-        
-        if (maze[sq.getRow()][sq.getCol()+1] != null){
-            square east = maze[sq.getRow()][sq.getCol()+1];
-            neighbors.add(east);
+
+        try{
+            square west = maze[sq.getRow()][sq.getCol()-1];
+            neighbors.add(west);
         }
-        if (maze[sq.getRow()-1][sq.getCol()] != null){
-            square north = maze[sq.getRow()-1][sq.getCol()];
-            neighbors.add(north);
+        catch(ArrayIndexOutOfBoundsException e){
+
         }
-        if (maze[sq.getRow()+1][sq.getCol()] != null){
+        try{
             square south = maze[sq.getRow()+1][sq.getCol()];
             neighbors.add(south);
         }
-        if (maze[sq.getRow()][sq.getCol()-1] != null){
-            square west = maze[sq.getRow()][sq.getCol()-1];
-            neighbors.add(west);
+        catch(ArrayIndexOutOfBoundsException e){
+
+        }
+        try{
+            square east = maze[sq.getRow()][sq.getCol()+1];
+            neighbors.add(east);
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+
+        }
+        try{
+            square north = maze[sq.getRow()-1][sq.getCol()];
+            neighbors.add(north);
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+
         }
 
         return neighbors;
 
 
+    }
+
+    square getSquare(int row, int col){
+        return maze[row][col];
     }
     square getStart(){
         for (int row=0; row < numRows; row++) {
@@ -87,7 +103,7 @@ public class maze
         String strmaze = "";
         for (int row=0; row < numRows; row++) {
             for (int col=0; col < numCols; col++) {
-                strmaze += (maze[row][col].toString()).substring(0, 1);
+                strmaze += (maze[row][col].toString()).substring(0, 1) + " ";
             }
             strmaze += "\n";
         }
