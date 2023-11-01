@@ -1,4 +1,4 @@
-// /**
+ // /**
 //  * The CSCI 151 Amazing Maze Solver GUI application.
 //  * 
 //  * Students should not need to modify anything in this file.
@@ -403,4 +403,3 @@
 //     }
 
 // }
-
