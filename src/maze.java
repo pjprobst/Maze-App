@@ -38,22 +38,21 @@ public class maze
     }
     public ArrayList<square> getNeighbors(square sq){
         ArrayList<square> neighbors = new ArrayList<square>();
-
-        square north = maze[sq.getRow()-1][sq.getCol()];
-        square east = maze[sq.getRow()][sq.getCol()+1];
-        square south = maze[sq.getRow()+1][sq.getCol()];
-        square west = maze[sq.getRow()][sq.getCol()-1];
         
-        if (north != null){
-            neighbors.add(north);
-        }
-        if (east != null){
+        if (maze[sq.getRow()][sq.getCol()+1] != null){
+            square east = maze[sq.getRow()][sq.getCol()+1];
             neighbors.add(east);
         }
-        if (south != null){
+        if (maze[sq.getRow()-1][sq.getCol()] != null){
+            square north = maze[sq.getRow()-1][sq.getCol()];
+            neighbors.add(north);
+        }
+        if (maze[sq.getRow()+1][sq.getCol()] != null){
+            square south = maze[sq.getRow()+1][sq.getCol()];
             neighbors.add(south);
         }
-        if (west != null){
+        if (maze[sq.getRow()][sq.getCol()-1] != null){
+            square west = maze[sq.getRow()][sq.getCol()-1];
             neighbors.add(west);
         }
 
