@@ -1,112 +1,128 @@
-import java.util.Scanner;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Scanner;
+import java.io.*;
+
 public class maze
 {
     private square[][] maze;
-    private int numRows, numCols;
-    private String fileName;
-
-    public maze(){
-
+    int numRows, numCols;
+    private square start, finish;
+    public maze()
+    {
+        numRows = 0;
+        numCols = 0;
     }
 
-    public boolean loadMaze(String fname)
+
+
+    boolean loadMaze(String fname)
     {
-        fileName = "C:\\Users\\pjprobst\\Desktop\\SOFTWARE REPOS\\MAZE PROGRAM\\Maze-App\\src\\" + fname;
-        File file = new File(fileName);
-
-        try (Scanner scanner = new Scanner(file)) {
-                numRows = scanner.nextInt();
-                numCols = scanner.nextInt();
-
-                this.maze = new square[numRows][numCols];
-
-            for (int row=0; row < numRows; row++) {
-                for (int col=0; col < numCols; col++) {
-                    maze[row][col] = new square(row, col, scanner.nextInt());
-                }
-            }
-            return true;
+        Scanner scan;
+        try 
+        {
+            File textfile = new File(fname);
+            scan = new Scanner(textfile);
+            
         }
-
-        catch (Exception e){
-            System.out.println("FILE NOT FOUND");
+        catch (FileNotFoundException e) 
+        {
             return false;
         }
+        numRows = scan.nextInt();
+        numCols = scan.nextInt();
+        maze = new square[numRows][numCols];
+
+        for (int row=0; row < numRows; row++) 
+        {
+            for (int col=0; col < numCols; col++)
+            {
+                int currType = scan.nextInt();
+                maze[row][col] = new square(row, col, currType);
+                if (currType == 2)
+                    start = maze[row][col];
+                if (currType == 3)
+                    finish = maze[row][col];
+            }
+        }
+        scan.close();
+        return true;
     }
-    public ArrayList<square> getNeighbors(square sq){
-        ArrayList<square> neighbors = new ArrayList<square>();
+    
+    
 
-        try{
-            square west = maze[sq.getRow()][sq.getCol()-1];
-            neighbors.add(west);
-        }
-        catch(ArrayIndexOutOfBoundsException e){
 
-        }
-        try{
-            square south = maze[sq.getRow()+1][sq.getCol()];
-            neighbors.add(south);
-        }
-        catch(ArrayIndexOutOfBoundsException e){
+    public ArrayList<square> getNeighbors(square sq)
+    {
+        int currRow = sq.getRow();
+        int currCol = sq.getCol();
+        ArrayList<square> neighbors = new ArrayList<>();
 
+        if (currRow - 1 >= 0)
+        {
+            if(maze[currRow - 1][currCol] != null && !(maze[currRow - 1][currCol].isExplored()))
+                neighbors.add(maze[currRow - 1][currCol]);
         }
-        try{
-            square east = maze[sq.getRow()][sq.getCol()+1];
-            neighbors.add(east);
+        if (currCol + 1 < numCols)
+        {
+            if (maze[currRow][currCol + 1] != null && !(maze[currRow][currCol + 1].isExplored()))
+                neighbors.add(maze[currRow][currCol + 1]);
         }
-        catch(ArrayIndexOutOfBoundsException e){
-
+        if (currRow + 1 < numRows)
+        {
+            if(maze[currRow + 1][currCol] != null && !(maze[currRow + 1][currCol].isExplored()))
+                neighbors.add(maze[currRow + 1][currCol]);
         }
-        try{
-            square north = maze[sq.getRow()-1][sq.getCol()];
-            neighbors.add(north);
+        if (currCol - 1 >= 0)
+        {
+            if(maze[currRow][currCol - 1] != null && !(maze[currRow][currCol - 1].isExplored()))
+                neighbors.add(maze[currRow][currCol - 1]);
         }
-        catch(ArrayIndexOutOfBoundsException e){
-
-        }
-
+        if (neighbors.isEmpty())
+            sq.setCharType('.');
         return neighbors;
-
-
     }
 
-    square getSquare(int row, int col){
-        return maze[row][col];
+
+
+    public square getStart()
+    {
+        return start;
     }
-    square getStart(){
-        for (int row=0; row < numRows; row++) {
-            for (int col=0; col < numCols; col++) {
-                if (maze[row][col].getType() == 2){
-                    return maze[row][col];
-                }
+
+    public square getFinish()
+    {
+        return finish;
+    }
+
+
+
+    public void reset()
+    {
+        for (int i = 0; i < numRows; i++)
+        {
+            for (int k = 0; k < numCols; k++)
+            {
+                maze[i][k].reset();
             }
+           
         }
-        return null;
     }
-    square getFinish(){
-        for (int row=0; row < numRows; row++) {
-            for (int col=0; col < numCols; col++) {
-                if (maze[row][col].getType() == 3){
-                    return maze[row][col];
-                }
+
+
+
+    public String toString()
+    {
+        String mazeString = "";
+
+        for (int i = 0; i < maze.length; i++)
+        {
+            for (int k = 0; k < maze[i].length; k++)
+            {
+                mazeString = mazeString + maze[i][k];
             }
+            mazeString = mazeString + "\n";
         }
-        return null;
-    }
-    void reset(){
-        loadMaze(fileName);
-    }
-    public String toString(){
-        String strmaze = "";
-        for (int row=0; row < numRows; row++) {
-            for (int col=0; col < numCols; col++) {
-                strmaze += (maze[row][col].toString()).substring(0, 1) + " ";
-            }
-            strmaze += "\n";
-        }
-        return strmaze;
+
+        return mazeString;
     }
 }

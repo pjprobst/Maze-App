@@ -1,6 +1,6 @@
 import java.util.NoSuchElementException;
 
-public class MyStack implements StackADT
+public class MyStack<T> implements StackADT
 {
     private Node first;
     private int size;
