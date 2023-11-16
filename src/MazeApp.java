@@ -83,7 +83,7 @@ public class MazeApp extends JFrame implements ActionListener {
 	loadButton = new JButton("load");
 	resetButton = new JButton("reset");
 	quitButton = new JButton("quit");
-	solverType = new JButton("stack");
+	solverType = new JButton("");
 	solveButton = new JButton("start");
 	stepButton = new JButton("step");
 
@@ -181,10 +181,6 @@ public class MazeApp extends JFrame implements ActionListener {
 	if (e.getSource() == resetButton) {
 	    reset();
 	}
-	if (e.getSource() == solverType) {
-	    toggleSolverType();
-	    makeNewSolver();
-	}
 	if (e.getSource() == quitButton) {
 	    doQuit();
 	}
@@ -277,16 +273,6 @@ public class MazeApp extends JFrame implements ActionListener {
     /**
      * Handles the user clicking on the solver type button.
      */
-    private void toggleSolverType() {
-	String oldType = solverType.getText();
-	if (oldType.equalsIgnoreCase("queue")) {
-	    solverType.setText("stack");
-	} else if (oldType.equalsIgnoreCase("stack")) {
-	    solverType.setText("queue");
-	} else
-	    throw new UnsupportedOperationException("Don't know how to change from a: " + oldType);
-	reset();
-    }
     
     /**
      * Builds a new MazeSolver of the type displayed on the button.
