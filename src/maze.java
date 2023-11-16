@@ -94,6 +94,11 @@ public class maze
         return finish;
     }
 
+    public square getSquare(int row, int col)
+    {
+        return maze[row][col];
+    }
+
 
 
     public void reset()
